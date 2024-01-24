@@ -25,31 +25,45 @@ var Main = /** @class */ (function () {
     }
     Main.prototype.main = function () {
         var choice;
-        do {
+        var _loop_1 = function () {
             choice = prompt("\n       Danh s\u00E1ch menu: \n       1. Hi\u1EC3n th\u1ECB th\u00F4ng tin \n       2. Th\u00EAm m\u1EDBi \n       3. S\u1EEDa th\u00F4ng tin\n       4. Delete\n       5. Tho\u00E1t\n      ");
             switch (choice) {
                 case "1":
-                    this.displayListStudent();
+                    console.log("vào 1");
+                    return { value: this_1.listStudent.forEach(function (student) {
+                            console.log("student", student);
+                            if (student) {
+                                student.displayData();
+                            }
+                        }) };
                 case "2":
-                    this.createStudent();
+                    var newStudent = new Student(0, "", 0, "", 0);
+                    newStudent.inputData();
+                    this_1.listStudent.push(newStudent);
+                    break;
+                case "3":
+                    var codeStudent_1 = Number(prompt("Vui lòng nhập vào code student mà bạn muốn sửa: "));
+                    var indexStudent = this_1.listStudent.findIndex(function (item) { return Number(item.studentCode) == Number(codeStudent_1); });
+                    if (indexStudent == -1) {
+                        console.log("mã code student bạn truyền vào không đúng");
+                    }
+                    else {
+                        var editStudent = new Student(0, "", 0, "", 0);
+                        editStudent.inputData();
+                        this_1.listStudent[indexStudent] = editStudent;
+                    }
                 case "5":
                     break;
                 default:
                     console.log("Đã xảy ra lỗi rồi");
             }
+        };
+        var this_1 = this;
+        do {
+            var state_1 = _loop_1();
+            if (typeof state_1 === "object")
+                return state_1.value;
         } while (choice !== "5");
-    };
-    Main.prototype.displayListStudent = function () {
-        console.log("List of all students:");
-        this.listStudent.forEach(function (student) {
-            if (student) {
-                student.displayData();
-            }
-        });
-    };
-    Main.prototype.createStudent = function () {
-        var newStudent = new Student(32423, "Chính", 15, "Hà Nội", 239847328);
-        this.listStudent.push(newStudent);
     };
     return Main;
 }());

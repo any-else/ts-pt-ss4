@@ -58,33 +58,42 @@ class Main {
        4. Delete
        5. Thoát
       `);
+
       switch (choice) {
         case "1":
-          this.displayListStudent();
+          console.log("vào 1");
+          return this.listStudent.forEach((student: Student) => {
+            console.log("student", student);
+            if (student) {
+              student.displayData();
+            }
+          });
         case "2":
-          this.createStudent();
+          const newStudent = new Student(0, "", 0, "", 0);
+          newStudent.inputData();
+          this.listStudent.push(newStudent);
+          break;
+        case "3":
+          const codeStudent = Number(
+            prompt("Vui lòng nhập vào code student mà bạn muốn sửa: ")
+          );
+          const indexStudent = this.listStudent.findIndex(
+            (item) => Number(item.studentCode) == Number(codeStudent)
+          );
+
+          if (indexStudent == -1) {
+            console.log("mã code student bạn truyền vào không đúng");
+          } else {
+            const editStudent = new Student(0, "", 0, "", 0);
+            editStudent.inputData();
+            this.listStudent[indexStudent] = editStudent;
+          }
         case "5":
           break;
         default:
           console.log("Đã xảy ra lỗi rồi");
       }
     } while (choice !== "5");
-  }
-
-  displayListStudent() {
-    console.log("List of all students:");
-    this.listStudent.forEach((student) => {
-      if (student) {
-        student.displayData();
-      }
-    });
-  }
-
-  createStudent() {
-    const newStudent = new Student(0, "", 0, "", 0);
-    newStudent.displayData();
-    this.listStudent.push(newStudent);
-    console.log(" Thêm mới thành công ");
   }
 }
 
